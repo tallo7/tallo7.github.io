@@ -1,0 +1,310 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(0, 0, 0);
+     margin-top: 0px;
+     margin-left: 0%;
+     margin-right: 0%;
+
+}
+
+header {
+    background-color: #ff0000;
+    color: white;
+    text-align: center;
+    padding: 10px;
+
+    
+   
+}
+
+.login2 {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    transition: transform 0.2s;
+    width: 500px;
+    text-align: center;
+}
+
+
+
+label {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #555;
+    font-weight: bold;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    background-color: #4CAF50;
+    width: 100%;
+    font-size: 16px;
+}
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.login {
+
+  width: 5%;
+  float: right;
+
+
+}
+
+
+.pulsante{
+
+background-color: #ff0000;
+color: black;
+text-align: center;
+width: 24.75%;
+height: 50px ;
+font-size: 110%;
+font-family: "Lucida Console";
+border-radius: 20px;
+margin-top: 5px;
+margin-bottom: 5px;
+cursor: pointer;
+border-style:ridge;
+
+text-decoration:#000000;
+box-shadow: 4px 4px 0px #7a0404;
+
+}
+
+
+.pulsante:active{
+    transform: translateX(4px) translateY(4px);
+    box-shadow: 0px 0px 0px transparent;
+}
+.pulsante:hover{
+   background-color: #ff0000b8;
+}
+
+.pulsante2{
+
+    background-color: #ff0000;
+    color: black;
+    text-align: center;
+    width: 19.75%;
+    height: 50px ;
+    font-size: 100%;
+    font-family: "Lucida Console";
+    border-radius: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-style:ridge;
+    
+    text-decoration:#000000;
+    box-shadow: 4px 4px 0px #7a0404;
+    
+    }
+    
+    
+    .pulsante2:active{
+        transform: translateX(4px) translateY(4px);
+        box-shadow: 0px 0px 0px transparent;
+    }
+    .pulsante2:hover{
+       background-color: #ff0000b8;
+    }
+
+
+nav {
+
+    background-color: #e1e90f;
+}
+
+.testi {
+    border-radius: 20px;
+    border-color: #ff0000;
+    border: 5px;
+    background-color: #e1e90f;
+    color: #000000;
+    width: 70%;
+    height: 395px;
+    margin-top: 2%;
+    margin-bottom: 5px;
+    padding-top: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    text-align: start;
+    font-size: 25px;
+    font-family:"Lucida Console";
+
+    
+}
+
+.footer{
+    background-color:#ff0000;
+    height: 100px;
+    text-align: center;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+
+
+.titoli{
+    text-align: center;
+    font-size: 50px;
+    font-family:"Lucida Console";
+    color: #000000;
+
+}
+
+.titoli2{
+    text-align: center;
+    font-size: 50px;
+    font-family:"Lucida Console";
+    color: #ff0000;
+
+}
+
+.destra{
+    float: right;
+    width: 28%;
+    margin-top: -340px;
+
+
+}
+.shop{
+    text-align: center;
+    color: #ff0000;
+    font-family:"Lucida Console";
+
+}
+
+.prezzi{
+    text-align: center;
+    color: #e1e90f;
+    font-family:"Lucida Console";
+}
+
+.shop img{
+    width: 55%;
+}
+
+
+
+
+
+
+
+.login2 {
+    border: 3px solid #e1e90f;
+    background-color: rgb(255, 0, 0);
+    margin-left: 25%;
+    width: 50%;
+    text-align: center;
+    margin-right: 25%;
+    margin-top: 30px;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 5px solid #e1e90f;
+
+}
+
+.tasto {
+  background-color: #e1e90f;
+  color: rgb(0, 0, 0);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  text-align: center;
+}
+
+.tasto:hover {
+  opacity: 0.8;
+}
+
+
+
+.container {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+.fotol {
+  width: 40%;
+  text-align: center;
+
+}
+
+.tabS{
+    color: rgb(0, 0, 0);
+    font-size: 25px;
+    font-family: Lucida Console;
+    text-align: center;
+    border-radius: 15px;
+    background-color: #e1e90f;
+}
+
+.tabF img{
+    width: 75%;  
+    margin-bottom: 25px;
+    border-radius: 15px;
+    margin-top: 25px;
+}
+
+.piloti{
+    margin-left: 15% ;
+    margin-right: 15%;
+    color: black;
+    font-family: Lucida Console;
+    text-align: center;
+    font-size: 150%;
+    background-color: #e1e90f;
+    border-radius: 15px;
+    padding: 5px;
+
+}
+.titoloP{
+    font-size: 300%;
+     text-align: center;
+      font-family: lucida console ;
+       color: #ff0000;
+        margin-top: -1px;
+}
+
+.sottoP{
+    font-size: 180%; font-family: lucida console ; color: #ff0000; text-align: center;
+}
