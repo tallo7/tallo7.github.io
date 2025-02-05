@@ -1,0 +1,138 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #909fa7;
+    color: white;
+    margin: 0%;
+    padding: 0;
+}
+
+header {
+    background-color: #5bdcdc; /*#17e7e7;*/
+    padding: 20px;
+    text-align: center;
+}
+
+.logo {
+    width: 250px;
+    height: auto;
+}
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.cornice {
+    background-color: #ffffff8b;
+    
+    padding: 40px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.titolo {
+    color: rgb(0, 0, 0);
+    font-size: 40px;
+    margin: 0;
+    text-align: center;
+}
+
+.footer {
+    background-color: #12010869;
+    padding: 10px;
+    text-align: center;
+}
+
+.button{
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    width: 19%;
+    height: 50px ;
+    font-size: 200%;
+    font-family: "Lucida Console";
+    border-radius: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-style:ridge;
+    border-spacing: 3px;
+}
+
+.button:hover{
+    background-color: #6995c8;
+}
+
+.article{
+    color: white;
+    margin: 0%;
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+.prima img{
+    width: 624px;
+    height: 368px; 
+}
+
+.dim img{
+    width: 400px;
+    height: 250px;
+    padding-left: 500px;
+    margin-top:-120px ;
+    margin-bottom: -70px;
+}
+
+.dim2 img{
+    width: 250px;
+    height: 250px;
+    padding-left: 550px;
+    margin-top:-120px ;
+    margin-bottom: -80px;
+}
+
+td{
+    padding: 5%;
+}
+
+.button_new{
+    background-color:#ffffff8b;;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    width: 5%;
+    height: 35px ;
+    font-size: 100%;
+    font-family: "Lucida Console";
+    
+    cursor: pointer;
+    border-style:ridge;
+    border-spacing: 0px;
+
+    border-radius: 20px;
+    margin-bottom: 1px;
+    margin-top: 1px;
+
+    margin-left: 12%;
+}
+
+.button_new:hover{
+    background-color:#ffffff62;;
+}
+
+.article_sm{
+    color: white;
+    margin: 0%;
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: left;
+}
+
+.article_smm{
+    color: white;
+    margin: 0%;
+    font-size: 24px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: left;
+}
