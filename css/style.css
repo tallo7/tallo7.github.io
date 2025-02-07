@@ -117,7 +117,30 @@ td{
     margin-left: 12%;
 }
 
+.button_new_{
+    background-color:#ffffff8b;;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    width: 5%;
+    height: 35px ;
+    font-size: 85%;
+    font-family: "Lucida Console";
+    
+    cursor: pointer;
+    border-style:ridge;
+    border-spacing: 0px;
+
+    border-radius: 20px;
+    margin-bottom: 1px;
+    margin-top: 1px;
+
+    margin-left: 12%;
+}
+
 .button_new:hover{
+    background-color:#ffffff62;;
+}
+.button_new_:hover{
     background-color:#ffffff62;;
 }
 
