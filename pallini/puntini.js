@@ -8,16 +8,16 @@ let snd_vittoria;
 let snd_rosso;
 let snd_verde;
 
-
+// Precarica le immagini e i suoni
 function preload() {
   rilevaMani = ml5.handPose({ flipped: true });
   sfondo = loadImage('cabinato.png');
   snd_rosso = new Audio("wrong.mp3");
   snd_vittoria = new Audio("victory.mp3");
   snd_verde = new Audio("positive.mp3");
-  
 }
 
+// Configura il canvas e avvia il rilevamento delle mani
 function setup() {
   let canvas = createCanvas(900, 680);
   canvas.parent('canvas-container');
@@ -31,6 +31,7 @@ function setup() {
   gioco.inizia();
 }
 
+// Ciclo principale di disegno
 function draw() {
   background(sfondo);
 
@@ -39,7 +40,7 @@ function draw() {
     return;
   }
 
-  //gioco.mostraVideo(video);
+  // gioco.mostraVideo(video);
 
   if (gioco.vinto) {
     gioco.mostraVittoria();
@@ -50,6 +51,7 @@ function draw() {
   gioco.controllaCollisioni();
 }
 
+// Gestisce i clic del mouse per iniziare o riavviare il gioco
 function mousePressed() {
   gioco.controllaPulsanti(mouseX, mouseY);
 }
@@ -68,6 +70,7 @@ class Gioco {
     this.aggiungiPallini();
   }
 
+  // Inizia il gioco, aggiungendo nuovi pallini ogni 5 secondi
   inizia() {
     setInterval(() => {
       if (!this.vinto && this.iniziato) {
@@ -77,6 +80,7 @@ class Gioco {
     }, 5000);
   }
 
+  // Crea i pallini iniziali
   creaPallini() {
     for (let i = 0; i < 10; i++) {
       this.creaPallino(this.palliniVerdi, color(0, 255, 0));
@@ -84,11 +88,13 @@ class Gioco {
     }
   }
 
+  // Aggiunge nuovi pallini al gioco
   aggiungiPallini() {
     this.creaPallino(this.palliniVerdi, color(0, 255, 0));
     this.creaPallino(this.palliniRossi, color(255, 0, 0));
   }
 
+  // Crea un nuovo pallino e assicura che non sia troppo vicino agli altri pallini
   creaPallino(arrayPallini, colore) {
     let nuovoPallino;
     let pallinoValido = false;
@@ -108,6 +114,7 @@ class Gioco {
     arrayPallini.push(nuovoPallino);
   }
 
+  // Mostra il titolo del gioco e il pulsante per iniziare
   mostraTitolo() {
     fill(255);
     textSize(32);
@@ -116,6 +123,7 @@ class Gioco {
     this.disegnaPulsante("Inizia", width / 2, height / 2);
   }
 
+  // Mostra il video (funzione disattivata)
   mostraVideo(video) {
     push();
     translate(width, 0);
@@ -124,6 +132,7 @@ class Gioco {
     pop();
   }
 
+  // Mostra il messaggio di vittoria e il pulsante per rigiocare
   mostraVittoria() {
     fill(255);
     textSize(32);
@@ -132,6 +141,7 @@ class Gioco {
     this.disegnaPulsante("Rigioca", width / 2, height / 2 + 50);
   }
 
+  // Aggiorna lo stato del gioco, disegnando i pallini e controllando il punteggio
   aggiorna() {
     for (let pallino of this.palliniVerdi) {
       pallino.mostra();
@@ -153,10 +163,12 @@ class Gioco {
     }
   }
 
+  // Controlla le collisioni tra le mani e i pallini
   controllaCollisioni() {
     this.mani.controllaCollisioni(this.palliniVerdi, this.palliniRossi);
   }
 
+  // Gestisce la vittoria del gioco
   vittoria() {
     this.suono(snd_vittoria);
     this.vinto = true;
@@ -164,6 +176,7 @@ class Gioco {
     this.palliniRossi = [];
   }
 
+  // Controlla i pulsanti del gioco
   controllaPulsanti(mouseX, mouseY) {
     if (!this.iniziato && mouseX > width / 2 - 50 && mouseX < width / 2 + 50 && mouseY > height / 2 - 25 && mouseY < height / 2 + 25) {
       this.iniziato = true;
@@ -174,6 +187,7 @@ class Gioco {
     }
   }
 
+  // Disegna un pulsante sul canvas
   disegnaPulsante(label, x, y) {
     fill(0, 102, 204);
     rectMode(CENTER);
@@ -184,20 +198,14 @@ class Gioco {
     text(label, x, y);
   }
 
-  /*suono(file) {
-    var snd = new Audio(file);
+  // Riproduce un suono
+  suono(snd) {
     snd.play().catch(error => {
       console.log("Errore nella riproduzione del suono:", error);
     });
   }
-*/
 
- suono(snd) {
-  snd.play().catch(error => {
-    console.log("Errore nella riproduzione del suono:", error);
-  });
-}
-
+  // Resetta lo stato del gioco
   resetta() {
     this.punteggio = 0;
     this.vinto = false;
@@ -205,6 +213,7 @@ class Gioco {
     this.creaPallini();
   }
 
+  // Ottiene i risultati del rilevamento delle mani
   ottieniMani(results) {
     this.mani.ottieni(results);
   }
@@ -218,6 +227,7 @@ class Pallino {
     this.colore = colore;
   }
 
+  // Mostra il pallino
   mostra() {
     fill(this.colore);
     ellipse(this.x, this.y, this.raggio, this.raggio);
@@ -231,10 +241,12 @@ class Mani {
     this.indiceY = 0;
   }
 
+  // Ottiene i risultati del rilevamento delle mani
   ottieni(results) {
     this.mani = results;
   }
 
+  // Disegna le mani rilevate
   disegna() {
     if (this.mani.length > 0) {
       let mano = this.mani[0];
@@ -246,6 +258,8 @@ class Mani {
       circle(this.indiceX, this.indiceY, 30);
     }
   }
+
+  // Controlla le collisioni tra le mani e i pallini verdi e rossi
 
   controllaCollisioni(palliniVerdi, palliniRossi) {
     if (this.mani.length > 0) {

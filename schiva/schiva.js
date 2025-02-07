@@ -4,6 +4,7 @@ let connessioni;
 let gioco;
 let sfondo;
 
+// Precarica le immagini e i suoni
 function preload() {
   rilevaMani = ml5.handPose({ flipped: true }, modelloPronto);
   sfondo = loadImage('cabinato.png');
@@ -11,10 +12,12 @@ function preload() {
   snd_fine = new Audio("gameover.mp3");
 }
 
+// Callback per quando il modello è pronto
 function modelloPronto() {
   console.log('Modello caricato correttamente');
 }
 
+// Configura il canvas e avvia il rilevamento delle mani
 function setup() {
   let canvas = createCanvas(800, 580);
   canvas.parent('canvas-container');
@@ -28,6 +31,7 @@ function setup() {
   gioco.inizia();
 }
 
+// Ciclo principale di disegno
 function draw() {
   background(sfondo);
 
@@ -40,6 +44,7 @@ function draw() {
   gioco.controllaCollisioni();
 }
 
+// Gestisce i clic del mouse per iniziare o riavviare il gioco
 function mousePressed() {
   gioco.controllaPulsanti(mouseX, mouseY);
 }
@@ -56,6 +61,7 @@ class Gioco {
     this.creaOstacoli();
   }
 
+  // Inizia il gioco, aggiungendo nuovi ostacoli ogni 5 secondi
   inizia() {
     setInterval(() => {
       if (this.iniziato && !this.vinto) {
@@ -64,16 +70,19 @@ class Gioco {
     }, 5000);
   }
 
+  // Crea gli ostacoli iniziali
   creaOstacoli() {
     for (let i = 0; i < 10; i++) {
       this.creaOstacolo();
     }
   }
 
+  // Crea un nuovo ostacolo
   creaOstacolo() {
     this.ostacoli.push(new Ostacolo(random(width), random(-height, 0), 20));
   }
 
+  // Mostra il titolo del gioco e il pulsante per iniziare
   mostraTitolo() {
     fill(0, 255, 0);
     rectMode(CENTER);
@@ -92,6 +101,7 @@ class Gioco {
     }
   }
 
+  // Aggiorna lo stato del gioco, disegnando il giocatore e gli ostacoli
   aggiorna() {
     this.giocatore.mostra();
     this.ostacoli.forEach(ostacolo => {
@@ -114,6 +124,7 @@ class Gioco {
     }
   }
 
+  // Mostra il messaggio di vittoria e il pulsante per rigiocare
   mostraVittoria() {
     fill(255);
     textSize(32);
@@ -123,10 +134,12 @@ class Gioco {
     noLoop();
   }
 
+  // Controlla le collisioni tra le mani e gli ostacoli
   controllaCollisioni() {
     this.mani.controllaCollisioni(this.giocatore, this.ostacoli);
   }
 
+  // Controlla i pulsanti del gioco
   controllaPulsanti(mouseX, mouseY) {
     if (!this.iniziato && mouseX > width / 2 - 100 && mouseX < width / 2 + 100 && mouseY > height / 2 - 50 && mouseY < height / 2 + 50) {
       this.iniziato = true;
@@ -138,6 +151,7 @@ class Gioco {
     }
   }
 
+  // Resetta lo stato del gioco
   resetta() {
     this.punteggio = 0;
     this.vite = 3;
@@ -148,6 +162,7 @@ class Gioco {
     this.creaOstacoli();
   }
 
+  // Disegna un pulsante sul canvas
   disegnaPulsante(label, x, y) {
     fill(0, 102, 204);
     rectMode(CENTER);
@@ -158,10 +173,12 @@ class Gioco {
     text(label, x, y);
   }
 
+  // Ottiene i risultati del rilevamento delle mani
   ottieniMani(results) {
     this.mani.ottieni(results);
   }
 
+  // Riproduce un suono
   suono(snd){
     snd.play().catch(error => {
       console.log("Errore nella riproduzione del suono:", error);
@@ -177,16 +194,19 @@ class Giocatore {
     this.afferrato = false;
   }
 
+  // Mostra il giocatore
   mostra() {
     fill(0, 0, 255);
     ellipse(this.x, this.y, this.size);
   }
 
+  // Resetta la posizione del giocatore
   reset() {
     this.x = width / 2;
     this.y = height - 100;
   }
 
+  // Muove il giocatore
   muovi(x, y) {
     this.x = x;
     this.y = y;
@@ -200,16 +220,19 @@ class Ostacolo {
     this.size = size;
   }
 
+  // Aggiorna la posizione dell'ostacolo
   aggiorna(punteggio) {
     this.y += 1 + punteggio / 10;
     this.mostra();
   }
 
+  // Mostra l'ostacolo
   mostra() {
     fill(255, 0, 0);
     ellipse(this.x, this.y, this.size);
   }
 
+  // Resetta la posizione dell'ostacolo
   reset() {
     this.y = random(-height, 0);
     this.x = random(width);
@@ -221,10 +244,12 @@ class Mani {
     this.mani = [];
   }
 
+  // Ottiene i risultati del rilevamento delle mani
   ottieni(results) {
     this.mani = results;
   }
 
+  // Disegna le mani rilevate
   disegna() {
     for (let mano of this.mani) {
       for (let [indicePuntoA, indicePuntoB] of connessioni) {
@@ -242,6 +267,7 @@ class Mani {
     }
   }
 
+  // Controlla le collisioni tra il giocatore e gli ostacoli
   controllaCollisioni(giocatore, ostacoli) {
     for (let mano of this.mani) {
       let pollicePunta = mano.keypoints[4];

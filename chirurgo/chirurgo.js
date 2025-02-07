@@ -10,6 +10,7 @@ let message = "", controllo = "";
 let backgroundImage;
 let cuore, cervello, stomaco, osso, osso_mano, polmone, organo_trasparente, omino;
 
+// Carica il modello di hand pose e le immagini prima dell'inizio del programma
 function preload() {
   handPose = ml5.handPose({ flipped: true });
   backgroundImage = loadImage('img/sala_operatoria.png');
@@ -17,12 +18,12 @@ function preload() {
   cervello = loadImage('img/cervello.png');
   stomaco = loadImage('img/stomaco.png');
   osso = loadImage('img/osso.png');
-  //polmone = loadImage('img/polmone_2.png');
   organo_trasparente = loadImage('img/organo_trasparente.png');
   osso_mano = loadImage('img/osso_mano.png');
   omino = loadImage('img/omino_2.png');
 }
 
+// Configura l'ambiente di disegno, il video e i blocchi iniziali
 function setup() {
   let canvas = createCanvas(981, 600);
   let x = (windowWidth - width) / 2;
@@ -47,6 +48,7 @@ function setup() {
   results.push(new Organi(680, 400, 5, osso_mano));
 }
 
+// Disegna continuamente il contenuto sul canvas
 function draw() {
   push();
   translate(width, 0);
@@ -61,6 +63,7 @@ function draw() {
   displayMessage();
 }
 
+// Disegna le mani rilevate e le loro connessioni
 function drawHands() {
   for (let hand of hands) {
     for (let [pointAIndex, pointBIndex] of connections) {
@@ -75,7 +78,7 @@ function drawHands() {
   for (let i = 0; i < hands.length; i++) {
     let hand = hands[i];
     for (let j = 0; j < hand.keypoints.length; j++) {
-      if (j == 4 || j == 8) {
+      if (j == 4 || j == 8) { // Disegna punti speciali per pollice e indice
         let keypoint = hand.keypoints[j];
         fill(25, 1, 2);
       } else {
@@ -88,18 +91,21 @@ function drawHands() {
   }
 }
 
+// Disegna i blocchi
 function drawBlocks() {
   for (let block of blocks) {
     block.draw();
   }
 }
 
+// Disegna i risultati (organi)
 function drawResults() {
   for (let result of results) {
     result.draw();
   }
 }
 
+// Controlla se una mano sta afferrando un oggetto e aggiorna la posizione dell'oggetto afferrato
 function checkGrabbing() {
   if (hands.length > 0) {
     let hand = hands[0];
@@ -133,6 +139,7 @@ let cont = 5;
 let errori = 0;
 let past = null;
 
+// Visualizza un messaggio sullo schermo in base ai risultati dell'interazione con i blocchi e gli oggetti
 function displayMessage() {
   for (let block of blocks) {
     if (grabbedObject) {
@@ -181,10 +188,13 @@ function displayMessage() {
     text(message, width / 2, height-50);
   }
 }
+
+// Funzione callback per il rilevamento delle mani
 function gotHands(results) {
   hands = results;
 }
 
+// Classe Blocco che rappresenta i blocchi sullo schermo
 class Blocco {
   constructor(x, y, result, image) {
     this.x = x;
@@ -198,6 +208,7 @@ class Blocco {
   }
 }
 
+// Classe Organi che rappresenta gli organi sullo schermo
 class Organi {
   constructor(x, y, value, image) {
     this.x = x;

@@ -1,3 +1,4 @@
+// Dichiarazione delle variabili per il rilevamento delle mani, il video e gli elementi del gioco
 let rilevaMani;
 let video;
 let mani = [];
@@ -22,6 +23,7 @@ class Carta {
     this.abbinata = false;
   }
 
+  // Disegna la carta, mostrando l'immagine se è girata o abbinata
   disegna() {
     if (this.girata || this.abbinata) {
       image(this.immagine, this.x, this.y, larghezzaCarta, altezzaCarta);
@@ -30,30 +32,29 @@ class Carta {
     }
   }
 
+  // Gira la carta
   gira() {
     suono();
     this.girata = !this.girata;
-    
   }
 
+  // Verifica se la carta è stata cliccata
   cliccata(px, py) {
     return px > this.x && px < this.x + larghezzaCarta && py > this.y && py < this.y + altezzaCarta;
   }
 }
 
+// Precarica le immagini e avvia il rilevamento delle mani
 function preload() {
   rilevaMani = ml5.handPose({ flipped: true });
   immagineRetroCarta = loadImage('retro.jpg');
-  immaginiCarte.push(loadImage('monumenti{0}.png'));
-  immaginiCarte.push(loadImage('monumenti{1}.png'));
-  immaginiCarte.push(loadImage('monumenti{2}.png'));
-  immaginiCarte.push(loadImage('monumenti{3}.png'));
-  immaginiCarte.push(loadImage('monumenti{4}.png'));
-  immaginiCarte.push(loadImage('monumenti{5}.png'));
+  for (let i = 0; i < 6; i++) {
+    immaginiCarte.push(loadImage(`monumenti{${i}}.png`));
+  }
   immagineSfondo = loadImage('sfondo.jpg'); // Carica l'immagine dello sfondo
-  
 }
 
+// Configura il canvas e avvia il rilevamento delle mani
 function setup() {
   let canvas = createCanvas(900, 680);
   canvas.parent('canvas-container');
@@ -64,6 +65,7 @@ function setup() {
   connessioni = rilevaMani.getConnections();
 }
 
+// Ciclo principale di disegno
 function draw() {
   background(220);
   image(immagineSfondo, 0, 0, width, height); // Disegna lo sfondo
@@ -81,6 +83,7 @@ function draw() {
   }
 }
 
+// Visualizza la pagina iniziale
 function visualizzaPaginaIniziale() {
   fill(0, 102, 204);
   rectMode(CENTER);
@@ -91,6 +94,7 @@ function visualizzaPaginaIniziale() {
   text("Start", width / 2, height / 2);
 }
 
+// Inizializza le carte
 function inizializzaCarte() {
   let posizioni = [];
   for (let i = 0; i < 12; i++) {
@@ -100,37 +104,15 @@ function inizializzaCarte() {
   }
   posizioni = shuffle(posizioni);
 
-  let pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[0]));
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[0]));
-
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[1]));
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[1]));
-
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[2]));
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[2]));
-
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[3]));
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[3]));
-
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[4]));
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[4]));
-
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[5]));
-  pos = posizioni.pop();
-  carte.push(new Carta(pos.x, pos.y, immaginiCarte[5]));
+  for (let i = 0; i < 6; i++) {
+    for (let j = 0; j < 2; j++) {
+      let pos = posizioni.pop();
+      carte.push(new Carta(pos.x, pos.y, immaginiCarte[i]));
+    }
+  }
 }
 
+// Disegna le mani e rileva i clic
 function disegnaMani() {
   for (let mano of mani) {
     for (let [indicePuntoA, indicePuntoB] of connessioni) {
@@ -142,8 +124,7 @@ function disegnaMani() {
     }
   }
 
-  for (let i = 0; i < mani.length; i++) {
-    let mano = mani[i];
+  for (let mano of mani) {
     let pollicePunta = mano.keypoints[4];
     let indicePunta = mano.keypoints[8];
     let distanza = dist(pollicePunta.x, pollicePunta.y, indicePunta.x, indicePunta.y);
@@ -160,8 +141,7 @@ function disegnaMani() {
       }
     }
 
-    for (let j = 0; j < mano.keypoints.length; j++) {
-      let keypoint = mano.keypoints[j];
+    for (let keypoint of mano.keypoints) {
       fill(0, 255, 0);
       noStroke();
       circle(keypoint.x, keypoint.y, 10);
@@ -169,13 +149,13 @@ function disegnaMani() {
   }
 }
 
+// Verifica se le carte girate corrispondono
 function controllaAbbinamento() {
   if (carteGirate[0].immagine === carteGirate[1].immagine) {
     suono1();
     carteGirate[0].abbinata = true;
     carteGirate[1].abbinata = true;
     coppieAbbinate++;
-
   } else {
     carteGirate[0].gira();
     carteGirate[1].gira();
@@ -183,21 +163,21 @@ function controllaAbbinamento() {
   carteGirate = [];
 }
 
+// Verifica se il gioco è finito
 function controllaFineGioco() {
   if (coppieAbbinate === 6) {
     suono2();
     carte = [];
     giocoFinito = true;
-    
   }
 }
 
+// Visualizza la schermata di fine gioco
 function visualizzaFineGioco() {
   fill(255, 0, 0);
   textSize(32);
   textAlign(CENTER, CENTER);
-  
-  text("hai vinto", width / 2, height / 2 - 50);
+  text("Hai vinto", width / 2, height / 2 - 50);
   textSize(24);
   text("Vuoi rigiocare?", width / 2, height / 2 + 50);
 
@@ -210,6 +190,7 @@ function visualizzaFineGioco() {
   text("Rigioca", width / 2, height / 2 + 105);
 }
 
+// Gestisce i clic del mouse per iniziare o riavviare il gioco
 function mousePressed() {
   if (!giocoIniziato && mouseX > width / 2 - 100 && mouseX < width / 2 + 100 && mouseY > height / 2 - 50 && mouseY < height / 2 + 50) {
     giocoIniziato = true;
@@ -225,17 +206,18 @@ function mousePressed() {
   }
 }
 
+// Ottieni i risultati del rilevamento delle mani
 function ottieniMani(risultati) {
   mani = risultati;
 }
 
+// Riproduci effetti sonori
 function suono() {
   var snd = new Audio("mixkit-air-zoom-vacuum-2608.wav");
   snd.play().catch(error => {
     console.log("Errore nella riproduzione del suono:", error);
   });
 }
-
 
 function suono1() {
   var snd = new Audio("correct-6033.mp3");
